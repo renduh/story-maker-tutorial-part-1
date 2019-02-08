@@ -1,0 +1,130 @@
+<!doctype html>
+
+<html>
+<head>
+  <title>Stories Maker</title>
+
+  <style>
+  @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,800');
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    width: 100%;
+    min-height:56px;
+    height:56px;
+    background:#fff;
+    border-bottom:1px solid #eee;
+    z-index:1000;
+  }
+  aside {
+    background: #eaeaea;
+    width:310px;
+    float:left;
+    height: 800px;
+  }
+  main {
+    background: #fff;
+    width: calc( 100% - 380px );
+    float: left;
+    margin-left: 50px;
+    position: relative;
+    overflow:hidden;
+  }
+  h1 {
+    font-family: sans-serif;
+    color: #3d3d3d;
+    font-size: 20px;
+    margin: 0 0 7px 0;
+  }
+  .title {
+    padding: 17px;
+    text-transform: uppercase;
+  }
+  </style>
+</head>
+<body>
+
+  <header id="header">
+    <div class="title">
+      <h1>Stories maker</h1>
+    </div>
+  </header>
+
+  <aside>
+  </aside>
+
+  <main id="main-area">
+    <canvas id="c" width="360" height="640"></canvas>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.6.0/fabric.min.js"></script>
+
+  <script>
+  // Global var for the canvas - global so our saving functions can access it
+  var canvas;
+
+  // Pul all canvas code in a function so we can call it after google fonts have loaded
+  function template1() {
+
+    // Make canvas a fabric canvas
+    canvas = new fabric.Canvas('c', {
+      preserveObjectStacking: true
+    });
+    canvas.backgroundColor = 'rgb(140,140,140)';
+
+    // Loading image onto canvas
+    var tempImg = 'img/birdbox.jpg';
+
+    var birdbox;
+    var birdboxImg = new Image();
+    birdboxImg.onload = function (img) {    
+         birdbox = new fabric.Image(birdboxImg, {
+            angle: 0,
+            width: 1171,
+            height: 1950,
+            left: 0,
+            top: 0,
+            scaleX: .33,
+            scaleY: .33,
+            selectable: true,      
+            borderColor: 'red',
+            cornerColor: 'green',
+            cornerSize: 12,
+            transparentCorners: false
+        });
+        canvas.add(birdbox);
+        // This is like z-index, this keeps the image behind the text
+        canvas.moveTo(birdbox, 0);
+    };
+    birdboxImg.src = tempImg;
+
+    // Load text onto canvas
+    var textbox = new fabric.Textbox('Caption goes here - you can resize the text with the handles', {
+      left: 20,
+      top: 455,
+      width: 320,
+      fontSize: 28,
+      fill: '#fff',
+      fontFamily: 'Open Sans',
+      fontWeight: 800,
+      textAlign: 'center',      
+      borderColor: 'red',
+      cornerColor: 'green',
+      cornerSize: 12,
+      transparentCorners: false
+    });
+    // Add shadow to the textbox with this line
+    textbox.setShadow("0px 0px 10px rgba(0, 0, 0, 1)");
+    canvas.add(textbox);
+  }
+
+  // Load our code - we're putting it all into a function so we can use different templates in a second tutorial
+  template1();
+  </script>
+
+</body>
+</html>
